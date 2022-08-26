@@ -22,6 +22,7 @@
      $dob=$row['dob'];
      $location=$row['location'];
       $status=$row['status'];
+
 ?>
 
 <!DOCTYPE html>
@@ -57,17 +58,17 @@
                 </div>
 
                   <div style="padding-left:80px">
-                          <img src="ws.jpg" width="300px" height="300px">
+                          <img src  =<?  > width="300px" height="300px">
                   </div>
                    
                   <div class="panel-body">
                     <div class="padd">
                       <div class="form quick-post">
                 
-                        <form class="form-horizontal" method="post" action="">
+                        <form class="form-horizontal" method="post" action="UpdateProfile.php" enctype="multipart/form-data" >
                             <div class="form-group">
                                <div class="col-lg-5">
-                                  <input type="file" name = "img" class="form-control"  >
+                                  <input type="file" name = "image" class="form-control"  >
                                </div>
                                <div class="col-lg-2">
                                   
@@ -75,13 +76,50 @@
 
 
                               <div class="col-lg-5">
-                                  <button type="submit" name = "submit" class="btn btn-primary">Upload</button>
+                                  <button type="submit" name = "upload"  value="upload" class="btn btn-primary">Upload</button>
                                </div>
 
                             </div> 
 
 
                        </form>
+                                
+                    <?php
+                        include '../connection.php';
+                        if(isset($_POST['upload']))
+                        {
+                            
+                            $ext= explode(".",$_FILES['image']['name']);
+                            $c=count($ext);
+                            $ext=$ext[$c-1];
+                            $date=date("D:M:Y");
+                            $time=date("h:i:s");
+                            $image_name=md5($date.$time);
+                            $image=$image_name.".".$ext;
+                           
+                          $query = "UPDATE `user` SET image = '$image'";
+                           if(mysqli_query($con,$query))
+                           {
+                               echo "Successfully inserted!";
+                               if($image !=null){
+                                           move_uploaded_file($_FILES['image']['tmp_name'],"../uploadedimage/$image");
+                                      }
+                              
+                           }
+                         
+                        }
+
+                          
+ 
+
+
+                      ?>
+                                  
+                              
+
+
+
+
                       </div>
                    </div>
                   </div>     
@@ -148,7 +186,7 @@
                               $query = "UPDATE `user` SET id='$id', name='$name', email='$email', `contact number`= '$contact' ,dob='$dob' , location='$location'  WHERE id = $id";
                               if(mysqli_query($con,$query)){
                                  
-                                  echo "<p style='color:green;'> password successfully updated!<p>";
+                                  echo "<p style='color:green;'> profile successfully updated!<p>";
                                   //echo 'Succesfully Inserted';
                               }
 

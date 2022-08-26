@@ -51,12 +51,12 @@
              <div class="col-md-6 portlets">
               <div class="panel panel-default">
                 <div class="panel-heading">
-                  <div class="pull-left">newsfeed</div>
+                  <div class="pull-left"><a href ="updatepassword.php"><?php echo "sanam" ?></a></div>
                   
                   <div class="clearfix"></div>
                 </div>
                 <div>
-                <a href ="updatepassword.php"></a>
+                
                 <p>
                     User have posted new post
                 </p>
